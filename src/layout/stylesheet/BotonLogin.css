@@ -21,3 +21,10 @@
   text-decoration: none;
   font-family: 'Comfortaa', cursive;
 }
+
+@media (max-width: 900px) {
+  .botonLogin {
+    margin-top: 0;
+  }
+}
+
