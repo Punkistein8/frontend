@@ -3,24 +3,54 @@ import './assets/css/animate.min.css'
 import './assets/css/Login-Form-Basic-icons.css'
 import './assets/css/styles.css'
 import logoClub from './assets/img/logoClub.png'
+import { useState } from 'react'
+
+import axios from 'axios'
 import { Link } from 'react-router-dom'
 
 const Registrarse = () => {
+
+  const [nombre, setNombre] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    if ([nombre, email, password, confirmPassword].includes('')) {
+      alert('Todos los campos son obligatorios')
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert('Las contraseñas no coinciden')
+      return;
+    }
+
+    // if (password.length < 6) {
+    //   alert('La contraseña debe tener al menos 6 caracteres')
+    //   return;
+    // }
+
+    //Crear usuario en la base de datos
+    const url = 'http://localhost:4000/api/usuarios/'
+    try {
+      await axios.post(url, { nombre, email, password });
+      setNombre('')
+      setEmail('')
+      setPassword('')
+      setConfirmPassword('')
+
+      return alert('Usuario creado correctamente, revisa tu email');
+    } catch (error) {
+      console.log(error);
+      alert(error.response.data.msg)
+      return;
+    }
+
+  }
   return (
     <>
-      <meta charSet="utf-8" />
-      <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
-      />
-      <title>Registrarse</title>
-      <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
-      <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
-      />
-      <link rel="stylesheet" href="assets/css/Login-Form-Basic-icons.css" />
-      <link rel="stylesheet" href="assets/css/styles.css" />
       <section
         className="d-flex flex-column position-relative py-4 py-xl-5"
         style={{ height: "100vh" }}
@@ -49,11 +79,8 @@ const Registrarse = () => {
             />
           </Link>
         </svg>
-        <div
-          className="container d-flex flex-grow-1 align-items-center align-content-around flex-sm-column justify-content-sm-around flex-md-column justify-content-md-around flex-lg-row justify-content-lg-around align-items-lg-center flex-xl-row flex-xxl-row"
-          id="container-XtraSmall"
-          style={{ maxWidth: "100%" }}
-        >
+        <div className="container d-flex flex-grow-1 align-items-center align-content-around flex-sm-column justify-content-sm-around flex-md-column justify-content-md-around flex-lg-row justify-content-lg-around align-items-lg-center flex-xl-row flex-xxl-row" id="container-XtraSmall"
+          style={{ maxWidth: "100%" }}>
           <div className="row g-0 flex-row bounce animated mb-5">
             <div className="col d-flex justify-content-center">
               <img
@@ -67,8 +94,7 @@ const Registrarse = () => {
           </div>
           <div
             className="row justify-content-center"
-            style={{ width: "50%", minWidth: 371 }}
-          >
+            style={{ width: "50%", minWidth: 371 }}>
             <div className="col justify-content-center">
               <div
                 className="card justify-content-center mb-5"
@@ -92,6 +118,7 @@ const Registrarse = () => {
                     className="text-center d-flex flex-column justify-content-center align-items-center align-content-center flex-wrap-reverse order-2 justify-content-lg-center align-items-lg-center"
                     method="post"
                     style={{ width: "100%" }}
+                    onSubmit={handleSubmit}
                   >
                     <div
                       className="d-flex justify-content-center mb-3"
@@ -100,8 +127,8 @@ const Registrarse = () => {
                     >
                       <input
                         className="form-control d-flex justify-content-center"
-                        type="email"
-                        name="email"
+                        type="search"
+                        name="nombre"
                         placeholder="Nombre"
                         style={{
                           maxWidth: 371,
@@ -109,6 +136,8 @@ const Registrarse = () => {
                           width: "100%",
                           fontSize: 21
                         }}
+                        value={nombre}
+                        onChange={e => setNombre(e.target.value)}
                       />
                     </div>
                     <div
@@ -127,6 +156,8 @@ const Registrarse = () => {
                           width: "100%",
                           fontSize: 21
                         }}
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
                       />
                     </div>
                     <div
@@ -136,7 +167,7 @@ const Registrarse = () => {
                     >
                       <input
                         className="form-control d-flex justify-content-center"
-                        type="email"
+                        type="password"
                         name="email"
                         placeholder="Password"
                         style={{
@@ -145,6 +176,8 @@ const Registrarse = () => {
                           width: "100%",
                           fontSize: 21
                         }}
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
                       />
                     </div>
                     <div
@@ -154,7 +187,7 @@ const Registrarse = () => {
                     >
                       <input
                         className="form-control d-flex justify-content-center"
-                        type="email"
+                        type="password"
                         name="email"
                         placeholder="Repite tu Password"
                         style={{
@@ -163,6 +196,8 @@ const Registrarse = () => {
                           width: "100%",
                           fontSize: 21
                         }}
+                        value={confirmPassword}
+                        onChange={e => setConfirmPassword(e.target.value)}
                       />
                     </div>
                     <div

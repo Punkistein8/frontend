@@ -3,7 +3,7 @@ import Landing from './layout/Landing.jsx'
 import Login from "./pages/login/Login.jsx"
 import OlvidePass from "./pages/olvide-pass/OlvidePass.jsx"
 import Registrarse from "./pages/registrarse/Registrarse.jsx"
-
+import ConfirmarCuenta from "./pages/confirmar-cuenta/confirmarCuenta.jsx"
 const App = () => {
 
   const script1 = document.createElement("script");
@@ -17,12 +17,13 @@ const App = () => {
 
   return (
     // <BrowserRouter basename="/frontend">
-      <Routes>
-        <Route index exact element={<Landing />} />
-        <Route exact path="/login" element={<Login />} />
-        <Route exact path="/olvidepass" element={<OlvidePass />} />
-        <Route exact path="/registrarme" element={<Registrarse />} />
-      </Routes>
+    <Routes>
+      <Route index exact element={<Landing />} />
+      <Route exact path="/login" element={<Login />} />
+      <Route exact path="/olvidepass" element={<OlvidePass />} />
+      <Route exact path="/registrarme" element={<Registrarse />} />
+      <Route exact path="/confirmar/:token" element={<ConfirmarCuenta />} />
+    </Routes>
     // </BrowserRouter>
   )
 }
